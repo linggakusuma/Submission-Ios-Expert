@@ -1,0 +1,4 @@
+language: objective-c
+xcode_project: Submission Ios Expert.xcodeproj # path to your xcodeproj folder
+xcode_scheme: Submission Ios Expert
+xcode_destination: platform=iOS Simulator,OS=15.0,name=iPhone 13 Pro Max
