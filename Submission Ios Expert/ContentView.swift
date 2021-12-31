@@ -8,9 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var homePresenter: HomePresenter
+    
+    @EnvironmentObject var favoritePresenter: FavoritePresenter
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        TabView {
+            HomeView(presenter: homePresenter)
+                .tabItem {
+                    Image(systemName: "house.fill")
+                    Text("Home")
+                }
+            FavoriteView(presenter: favoritePresenter)
+                .tabItem {
+                    Image(systemName: "heart.fill")
+                    Text("Favorites")
+                }
+            AboutView()
+                .tabItem {
+                    Image(systemName: "person.fill")
+                    Text("About")
+                }
+        }
     }
 }
 
