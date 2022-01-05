@@ -6,15 +6,17 @@
 //
 
 import SwiftUI
+import Core
+import Game
 
 struct FavoriteView : View {
   
-  @ObservedObject var presenter: FavoritePresenter
+  @ObservedObject var presenter: GetListPresenter<Any, GameModuleModel, Interactor<Any, [GameModuleModel], GetFavoriteGameRepository<GetFavoriteGameLocaleDataSource, GameTransformer>>>
   
   var body: some View {
     NavigationView {
       ZStack {
-        if presenter.loadingState {
+        if presenter.isLoading {
           VStack {
             Text("Loading...")
             ActivityIndicator()
@@ -22,16 +24,16 @@ struct FavoriteView : View {
         } else {
           ScrollView(.vertical, showsIndicators: false) {
             ForEach(
-              self.presenter.games,
+              self.presenter.list,
               id: \.id
             ) { game in
               ZStack {
-                Text(self.presenter.emptyMessage)
+                Text(self.presenter.errorMessage)
                   .font(.title3)
                   .bold()
                   .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 
-                self.presenter.linkBuilder(for: game) {
+                linkBuilder(for: game) {
                   GameRow(game: game)
                 }.buttonStyle(PlainButtonStyle())
               }.padding(8)
@@ -40,12 +42,22 @@ struct FavoriteView : View {
           }
         }
       }.onAppear {
-        self.presenter.getFavorites()
+        self.presenter.getList(request: nil)
       }.navigationBarTitle(
         Text("Favorite Games"),
         displayMode: .automatic
       )
     }
+  }
+  
+  func linkBuilder<Content: View>(
+    for game: GameModuleModel,
+    @ViewBuilder content: () -> Content
+  ) -> some View {
+    
+    NavigationLink(
+      destination: HomeRouter().makeDetailView(for: game)
+    ) { content() }
   }
 }
 

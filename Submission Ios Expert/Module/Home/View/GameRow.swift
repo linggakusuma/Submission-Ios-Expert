@@ -7,10 +7,12 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import Game
+import Core
 
 struct GameRow: View {
     
-    var game: Game
+    var game: GameModuleModel
     var body: some View {
         VStack {
             imageCategory
@@ -51,15 +53,6 @@ extension GameRow {
                 trailing: 16
             )
         )
-    }
-    
-}
-
-struct GameRow_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        let game = Game(id: 1, name: "GTA V", released: "10 Jun 2000", backgroundImage: "https://media.rawg.io/media/games/456/456dea5e1c7e3cd07060c14e96612001.jpg", rating: 5.0, description: "", isFavorite: false)
-        return GameRow(game: game)
     }
     
 }

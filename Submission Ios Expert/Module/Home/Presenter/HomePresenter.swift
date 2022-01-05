@@ -40,10 +40,6 @@ class HomePresenter : ObservableObject {
             })
             .store(in: &cancellables)
     }
-    
-    func linkBuilder<Content: View>(for game: Game, @ViewBuilder content: () -> Content) -> some View {
-        NavigationLink(
-            destination: router.makeDetailView(for: game)) {content()}
-    }
+ 
 }
 
